@@ -28,18 +28,18 @@ async function pushClase(clase){
     return result;
 }
 
-async function updateClase(id){
+async function updateClase(claseUpdate){
 	const connectionMongo = await connection.getConnection();
     // TODO: Traer el objeto clase con id
     // clase.usuarios.push(nuevousuario)
-
-    const query = {codClase: parseInt(clase.codClase)}
+    let compare = claseUpdate.codClase
+    const query = {compare: parseInt(clase.codClase)}
 	const newvalues = {
 		$set:{
-            clave: clase.clave, 
+            codClase: clase.codClase, 
+            nombre_Clase:clase.nombre_Clase, 
             dia:clase.dia, 
-            hora:clase.hora, 
-            Alumnos : clase.Alumnos
+            hora : clase.hora
 		}
 	}
 	const result = await connectionMongo.db('Gimnasio')

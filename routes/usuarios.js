@@ -7,9 +7,10 @@ const auth = require('../middleware/auth')
 /* GET users listing. */
 
 
-router.post('/',async (req,res) => {
-  res.json(await userData.pushUsuario(req.body))
-})
+//router.post('/',async (req,res) => {
+  //res.json(await userData.pushUsuario(req.body))
+//})
+//MODIFIQUE EL SACAR EL AUTH 
 
 router.post('/login',async (req,res) =>{
   try {
@@ -30,7 +31,7 @@ router.post('/',async (req,res) => {
 })
 
 /* Listado de usuarios */
-router.get('/' ,auth, async function(req, res) {
+router.get('/' , async function(req, res) {
   const data = await userData.getUsuarios();
   res.json(data);
 });
@@ -41,7 +42,7 @@ router.get('/:id',auth, async (req, res) => {
 });
 
 // Modificacion de Usuario
-router.put('/:id',auth, async (req, res) =>{
+router.put('/:id', async (req, res) =>{
   const usuario = req.body;
    
   try {
@@ -54,9 +55,9 @@ router.put('/:id',auth, async (req, res) =>{
 });
 
 // Eliminacion de Usuario
-router.delete('/:id',auth, async (req, res)=>{
+router.delete('/:dni', async (req, res)=>{
   try {
-    const result = await userData.deleteUsuario(req.params.id);
+    const result = await userData.deleteUsuario(req.params.dni);
     res.send(result);
   } catch (error) {
     res.status(500).send(error);

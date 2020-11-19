@@ -40,11 +40,11 @@ async function updateUsuario(usuario){
 	return result;
 }
 
-async function deleteUsuario(id){
+async function deleteUsuario(dni){
 	const connectionMongo = await connection.getConnection();
 	const result = await connectionMongo.db('Gimnasio')
 						.collection('usuarios')
-						.deleteOne({_id: parseInt(id)});
+						.deleteOne({dni: parseInt(dni)});
 	return result;
 }
 
