@@ -28,18 +28,40 @@ async function pushClase(clase){
     return result;
 }
 
-async function updateClase(claseUpdate){
-	const connectionMongo = await connection.getConnection();
+async function findClase(codClase){
+    const connectionMongo = await connection.getConnection();
+    const result = await connectionMongo.db('Gimnasio')
+                        .collection('clases')
+                        .findOne({codClase: parseInt(codClase) });
+
+    return result;                    
+}
+
+async function updateClase(claseUpdate,alumno){
+    
+    const connectionMongo = await connection.getConnection();
+    console.log(claseUpdate)
+    console.log(alumno)
     // TODO: Traer el objeto clase con id
     // clase.usuarios.push(nuevousuario)
-    let compare = claseUpdate.codClase
-    const query = {compare: parseInt(clase.codClase)}
+    let compare = claseUpdate
+    console.log(compare)
+    // buscar con el claseupdate y dsp lo incorporas al array.
+    //aca va el find
+
+    //let usuarioNew = claseUpdate.Alumnos.push(alumno)
+    let alumnosAux = findClase(claseUpdate)
+    alumnosAux.push(alumno)
+    console.log(alumnosAux)
+    const query = {codClase: parseInt(clase.codClase)}
 	const newvalues = {
 		$set:{
             codClase: clase.codClase, 
             nombre_Clase:clase.nombre_Clase, 
             dia:clase.dia, 
-            hora : clase.hora
+            hora : clase.hora,
+            alumnos : alumnosAux
+            
 		}
 	}
 	const result = await connectionMongo.db('Gimnasio')

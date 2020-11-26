@@ -13,8 +13,8 @@ router.get('/' , async function(req, res) {
 });
 
 /* Una clase especifica */
-router.get('/id', async (req, res) => {
-    res.json(await dataClases.getClase(req.params._id));
+router.get('/:codClase', async (req, res) => {
+    res.json(await dataClases.getClase(req.params.codClase));
 });
 
 // Alta de Clase
@@ -32,15 +32,17 @@ router.post('/',async (req, res) =>{
 });
 // Modificacion de Clase
 router.put('/:codClase', async (req, res) =>{
-  const clase = req.body;
+  const v1= req.params.codClase
   
-  try {
-    clase.codClase = req.params.codClase;
-    const result = await dataClases.updateClase(clase);
+  const clase = req.body;
+  //const alumno = req.body.alumno;
+ try {
+    const result = await dataClases.updateClase(v1,clase);
     res.json(result);
   } catch (error) {
     res.status(500).send(error);
-  }
+    }
+  //res.json({v1,clase})
 });
 
 // Eliminacion de Clase
