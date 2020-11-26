@@ -29,38 +29,43 @@ async function pushClase(clase){
 }
 
 async function findClase(codClase){
-    const connectionMongo = await connection.getConnection();
-    const result = await connectionMongo.db('Gimnasio')
+    const connectionMongo =  await connection.getConnection();
+    const result =  await connectionMongo.db('Gimnasio')
                         .collection('clases')
+                       // .findOne({codClase:codClase});
                         .findOne({codClase: parseInt(codClase) });
 
     return result;                    
 }
 
-async function updateClase(claseUpdate,alumno){
-    
+async function updateClase(codigoClase,alumno){
+
     const connectionMongo = await connection.getConnection();
-    console.log(claseUpdate)
+    console.log(codigoClase)
     console.log(alumno)
+    console.log('holaa')
     // TODO: Traer el objeto clase con id
     // clase.usuarios.push(nuevousuario)
-    let compare = claseUpdate
+    let compare = codigoClase
     console.log(compare)
     // buscar con el claseupdate y dsp lo incorporas al array.
     //aca va el find
-
     //let usuarioNew = claseUpdate.Alumnos.push(alumno)
-    let alumnosAux = findClase(claseUpdate)
+    let claseActual = await findClase(codigoClase)
+    console.log(claseActual)
+    console.log('y aca hola despues de buscar clase')
+    let alumnosAux = claseActual.Alumnos
+    console.log(alumnosAux)
     alumnosAux.push(alumno)
     console.log(alumnosAux)
-    const query = {codClase: parseInt(clase.codClase)}
+    //    const query = {codClase: parseInt(clase.codClase)}
 	const newvalues = {
 		$set:{
             codClase: clase.codClase, 
             nombre_Clase:clase.nombre_Clase, 
             dia:clase.dia, 
             hora : clase.hora,
-            alumnos : alumnosAux
+            Alumnos : alumnosAux
             
 		}
 	}

@@ -32,12 +32,12 @@ router.post('/',async (req, res) =>{
 });
 // Modificacion de Clase
 router.put('/:codClase', async (req, res) =>{
-  const v1= req.params.codClase
+  const codigoClase= req.params.codClase
   
-  const clase = req.body;
+  const alumno = req.body;
   //const alumno = req.body.alumno;
  try {
-    const result = await dataClases.updateClase(v1,clase);
+    const result = await dataClases.updateClase(codigoClase,alumno);
     res.json(result);
   } catch (error) {
     res.status(500).send(error);
