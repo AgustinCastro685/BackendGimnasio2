@@ -8,6 +8,8 @@ var indexRouter = require('./routes/index');
 const claseRouter = require('./routes/clases.js')
 const usuarioRouter = require('./routes/usuarios.js')
 const adminRouter = require('./routes/admins.js')
+const reservaRouter = require('./routes/reservas.js')
+
 
 
 
@@ -40,6 +42,8 @@ app.use('/', indexRouter);
 app.use('/api/clases',claseRouter)
 app.use('/api/usuarios',usuarioRouter)
 app.use('/api/admins',adminRouter)
+app.use('/api/reservas',reservaRouter)
+
 
 
 
