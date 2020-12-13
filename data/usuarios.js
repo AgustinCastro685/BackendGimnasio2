@@ -16,28 +16,32 @@ async function getUsuarios(){
     return usuarios;
 }
 
-
-
-async function getUsuario(id){
+async function getUsuario(dni){
     const connectionMongo = await connection.getConnection();
     const usuario = await connectionMongo.db('Gimnasio')
                         .collection('usuarios')
-                        .findOne({_id: parseInt(id) });
+                        .findOne({dni: parseInt(dni) });
     return usuario;
 }
 
 async function updateUsuario(usuario){
-	const connectionMongo = await connection.getConnection();
-	const query = {_id: parseInt(usuario._id)}
-	const newvalues = {
-		$set:{
-			dni: usuario.dni,nombre:usuario.nombre,apellido:usuario.apellido
-		}
-	}
-	const result = await connectionMongo.db('Gimnasio')
+    console.log(usuario)
+    const query = {dni: parseInt(usuario.dni)}
+    usuario.password = await bcrypt.hash(usuario.password,8) //el numero es el salt
+    const newvalues = {
+        $set: {
+            dni: usuario.dni, 
+            email: usuario.email, 
+            nombre: usuario.nombre,
+            apellido: usuario.apellido,
+            password: usuario.password
+        }
+    }
+    const connectionMongo =  await connection.getConnection();
+    const result = await connectionMongo.db('Gimnasio')
                         .collection('usuarios')
-						.updateOne(query, newvalues);
-	return result;
+                        .updateOne(query, newvalues);
+    return result;
 }
 
 async function deleteUsuario(dni){

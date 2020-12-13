@@ -24,11 +24,11 @@ router.post('/login',async (req,res) =>{
     res.status(401).send(error.message)
 
   }
-})
+});
 
 router.post('/',async (req,res) => {
   res.json(await userData.pushUsuario(req.body))
-})
+});
 
 /* Listado de usuarios */
 router.get('/' , async function(req, res) {
@@ -37,17 +37,19 @@ router.get('/' , async function(req, res) {
 });
 
 /* Un usuario especifico */
-router.get('/:id',auth, async (req, res) => {
-    res.json(await userData.getUsuario(req.params.id));
+router.get('/:dni', async (req, res) => {
+    res.json(await userData.getUsuario(req.params.dni));
 });
 
 // Modificacion de Usuario
-router.put('/:id', async (req, res) =>{
+router.put('/:dni', async (req, res) =>{
   const usuario = req.body;
-   
+
   try {
-    usuario._id = req.params.id;
+    usuario.dni = req.params.dni;
+    console.log('llegue al req.dni')
     const result = await userData.updateUsuario(usuario);
+    console.log('pase el update')
     res.json(result);
   } catch (error) {
     res.status(500).send(error);
